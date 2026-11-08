@@ -1,0 +1,17 @@
+[project]
+name = "inbox-triage-agent"
+version = "0.1.0"
+description = "Customer e-mail triage and reply drafts with a human approval gate"
+requires-python = ">=3.9"
+authors = [{ name = "Maksym Kovalevskyi" }]
+license = { text = "MIT" }
+
+[project.scripts]
+inbox-triage = "inbox_triage.cli:main"
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project.setuptools.packages.find]
+where = ["src"]

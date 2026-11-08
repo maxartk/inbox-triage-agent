@@ -1,0 +1,23 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Unit tests
+        run: PYTHONPATH=src python -m unittest discover -s tests -v
+      - name: End-to-end triage
+        run: |
+          PYTHONPATH=src python -m inbox_triage.cli triage --in examples/messages.jsonl --outbox /tmp/outbox
+          PYTHONPATH=src python -m inbox_triage.cli list --outbox /tmp/outbox
